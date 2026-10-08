@@ -1,0 +1,17 @@
+services:
+  chatbot_app:
+    container_name: chatbot
+    image: workshop-llm-obs-chatbot-base:latest
+    ports:
+      - "${STREAMLIT_PORT}:${STREAMLIT_PORT}"
+    environment:
+      - STREAMLIT_PORT=${STREAMLIT_PORT:-8501}
+      - STREAMLIT_URL=${STREAMLIT_URL:-0.0.0.0}
+    command:
+      [
+        "sh",
+        "-c",
+        "streamlit run app.py --server.port=${STREAMLIT_PORT:-8501} --server.address=${STREAMLIT_URL:-0.0.0.0}",
+      ]
+    volumes:
+      - ./chatbot/app:/app
