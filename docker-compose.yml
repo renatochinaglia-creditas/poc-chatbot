@@ -1,7 +1,7 @@
 services:
   chatbot_app:
     container_name: chatbot
-    image: workshop-llm-obs-chatbot-base:latest
+    build: ./chatbot/app
     ports:
       - "${STREAMLIT_PORT}:${STREAMLIT_PORT}"
     environment:
@@ -11,7 +11,50 @@ services:
       [
         "sh",
         "-c",
-        "streamlit run app.py --server.port=${STREAMLIT_PORT:-8501} --server.address=${STREAMLIT_URL:-0.0.0.0}",
+        "streamlit run app.py --server.port=${STREAMLIT_PORT:-8501}
+          --server.address=${STREAMLIT_URL:-0.0.0.0}",
       ]
     volumes:
       - ./chatbot/app:/app
+    networks:
+      - llm_app
+  backend_api:
+    container_name: api
+    build: ./backend_api/app
+    ports:
+      - "${FASTAPI_PORT}:${FASTAPI_PORT:-8000}"
+    volumes:
+      - ./backend_api/app:/app
+      - ./corp-ca.pem:/etc/ssl/corp-ca.pem:ro
+    environment:
+      - FASTAPI_PORT=${FASTAPI_PORT:-8000}
+      - LLM_MODEL=${LLM_MODEL}
+      - LLM_BASE_URL=${LLM_BASE_URL:-http://host.docker.internal}
+      - LLM_PORT=${LLM_PORT:-11434}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OLLAMA_DEFAULT_PORT=${OLLAMA_DEFAULT_PORT:-11434}
+      - DD_ENV=${DD_ENV:-staging}
+      - DD_SERVICE=${DD_SERVICE:-quantumhound-api}
+      - DD_VERSION=${DD_VERSION:-1.0.0}
+      - DD_SITE=${DD_SITE:-datadoghq.com}
+      - DD_API_KEY=${DD_API_KEY}
+      - SSL_CERT_FILE=/etc/ssl/corp-ca.pem
+      - REQUESTS_CA_BUNDLE=/etc/ssl/corp-ca.pem
+      - DD_LLMOBS_ENABLED=1
+      - DD_LLMOBS_ML_APP=quantumhound-chatbot
+      - DD_LLMOBS_AGENTLESS_ENABLED=1
+    command:
+      [
+        "sh",
+        "-c",
+        "ddtrace-run uvicorn app:app --host ${FASTAPI_HOST} --port ${FASTAPI_PORT:-8000}
+          --reload",
+      ]
+    restart: on-failure
+    networks:
+      - llm_app
+
+networks:
+  llm_app:
+    name: llm_app
+    driver: bridge

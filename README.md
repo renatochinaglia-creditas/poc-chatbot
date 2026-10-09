@@ -1,79 +1,112 @@
 # poc-chatbot
 
-PoC de um chatbot (**QuantumHound**, uma agência fictícia de viagem no tempo) construído por etapas. Cada etapa é uma branch, e cada branch tem um Pull Request em rascunho que mostra só o que mudou naquela etapa. Os PRs não são mergeados: a `main` fica apenas com o README inicial, e a evolução se acompanha pelos PRs e pelas tags.
+PoC de um chatbot (**QuantumHound**, uma agência fictícia de viagem no tempo) construído por etapas. Cada etapa é uma branch, e cada branch tem um Pull Request em rascunho que mostra só o que mudou naquela etapa. Os PRs não são mergeados: a `main` fica apenas com este README, e a evolução se acompanha pelos PRs e pelas tags.
 
 | Etapa | Branch | Tag | O que muda |
 |-------|--------|-----|------------|
-| 1 (esta) | `step-1-baseline` | `step-1` | Chatbot Streamlit com respostas fixas |
+| 1 | `step-1-baseline` | `step-1` | Chatbot Streamlit com respostas fixas |
 | 2 | `step-2-ollama` | `step-2` | Backend FastAPI que chama o Ollama local, com observabilidade no Datadog |
 
 Para ver o código de uma etapa: `git checkout step-N` (ou `git checkout step-N-nome`). Para ver o que mudou, abra o PR da etapa.
 
-## Etapa 1: baseline
-
-Interface de chat em Streamlit. **Não há LLM nem backend**: as respostas são fixas e escolhidas por palavras-chave na mensagem.
+## Arquitetura (etapa 2)
 
 ```
-Navegador ──► chatbot (Streamlit :8501)
+Navegador ──► chatbot (Streamlit :8501) ──► api (FastAPI :8000) ──► Ollama (no seu Mac, :11434)
+                                                  │
+                                                  └──► Datadog (LLM Observability, modo agentless)
 ```
 
-### O que foi feito
+- **chatbot:** interface de chat em Streamlit, em [chatbot/app/](chatbot/app/).
+- **api:** backend FastAPI, em [backend_api/app/](backend_api/app/). Recebe o prompt, chama o Ollama e devolve a resposta.
+- **Ollama:** roda **fora do Docker**, direto na sua máquina. Os containers o alcançam por `host.docker.internal`.
+- **Datadog:** o backend roda sob `ddtrace-run` e envia traces de LLM direto à API do Datadog, sem Datadog Agent.
 
-1. Criado o app Streamlit em [chatbot/app/app.py](chatbot/app/app.py), com título, ícone e histórico de conversa guardado em `st.session_state`.
-2. Criada a função `generate_response` em [chatbot/app/chat_requests.py](chatbot/app/chat_requests.py). Ela converte o prompt para minúsculas e devolve uma resposta fixa conforme a palavra-chave encontrada:
+## Passo a passo do que foi feito
 
-   | Palavras-chave | Assunto da resposta |
-   |----------------|---------------------|
-   | `hello`, `hi`, `hey` | Saudação |
-   | `cost`, `price`, `expensive` | Preços dos pacotes |
-   | `safe`, `safety`, `dangerous` | Segurança |
-   | `how`, `work`, `technology` | Como funciona a tecnologia |
-   | `where`, `destination`, `visit` | Destinos |
-   | (nenhuma) | Mensagem padrão convidando a perguntar |
+### Etapa 1: baseline (`step-1-baseline`)
 
-   A função devolve `{"success": True, "message": ...}`, formato que a interface já sabe exibir.
-3. Criado o [Dockerfile](chatbot/app/Dockerfile) (`python:3.12-slim`, dependências em [requirements.txt](chatbot/app/requirements.txt): `streamlit` e `requests`).
-4. Criado o [docker-compose.yml](docker-compose.yml) com o serviço `chatbot_app`. O código em `chatbot/app` é montado como volume, então alterações no código aparecem sem reconstruir a imagem.
-5. O [.gitignore](.gitignore) mantém o `.env` fora do Git.
+1. Criado o app Streamlit em [chatbot/app/app.py](chatbot/app/app.py), com histórico de conversa guardado em `st.session_state`.
+2. A função `generate_response` em [chatbot/app/chat_requests.py](chatbot/app/chat_requests.py) devolvia respostas fixas, escolhidas por palavras-chave (`hello`, `price`, `safe`, `how`, `where`). Nenhuma chamada de rede e nenhum LLM.
+3. Criado o [Dockerfile](chatbot/app/Dockerfile) (`python:3.12-slim`) e o [docker-compose.yml](docker-compose.yml) para subir o chatbot.
+4. O `.env` (que guarda chaves) fica fora do Git, pelo `.gitignore`.
 
-### Como rodar
+### Etapa 2: backend com Ollama (`step-2-ollama`)
 
-**Pré-requisito:** Docker.
+1. **Problema inicial:** o compose original usava as imagens `workshop-llm-obs-chatbot-base` e `workshop-llm-obs-backend-api-base`. Elas só existiam na máquina de quem montou o workshop, e o `docker compose up` falhava com `pull access denied`.
+   **Solução:** troquei `image:` por `build:` nos dois serviços. Agora o Docker constrói as imagens a partir dos Dockerfiles do repositório.
+2. **Ollama local no lugar do container.** Como o Ollama já estava instalado, removi o serviço `llm` e o volume `ollama_models` do compose. O backend usa `LLM_BASE_URL=http://host.docker.internal`.
+3. **Backend FastAPI** em [backend_api/app/app.py](backend_api/app/app.py):
+   - `POST /chat` recebe `{"prompt": "..."}` e devolve `{"success": true, "message": "..."}`.
+   - `GET /health` devolve `{"status": "ok"}`.
+   - A chamada ao Ollama usa `POST /api/chat`, com um prompt de sistema que mantém o personagem da QuantumHound.
+   - A função que chama o modelo tem o decorator `@llm` do `ddtrace`, e `LLMObs.annotate` registra entrada e saída para o Datadog.
+4. **Chatbot ligado ao backend.** `generate_response` agora faz `POST` em `{FASTAPI_BASE_URL}:{FASTAPI_PORT}/chat`. Se o backend falhar, devolve `{"success": false, "error": ...}`, que a interface já sabia exibir.
+5. **Datadog (LLM Observability, agentless):** o serviço `backend_api` sobe com `ddtrace-run uvicorn ...` e as variáveis `DD_LLMOBS_ENABLED=1`, `DD_LLMOBS_ML_APP=quantumhound-chatbot`, `DD_LLMOBS_AGENTLESS_ENABLED=1`, `DD_API_KEY` e `DD_SITE`.
+6. **CA corporativo:** o `backend_api` monta `corp-ca.pem` (gerado localmente, fora do Git) e define `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE`, para o `ddtrace` conseguir enviar os traces.
+7. Adicionado o [.python-version](.python-version) (`3.12`), alinhado ao Dockerfile.
+
+## Como rodar (etapa 2)
+
+**Pré-requisitos:** Docker, Ollama rodando em `localhost:11434` e ao menos um modelo baixado (`ollama list`).
 
 1. Crie um arquivo `.env` na raiz:
 
    ```env
    STREAMLIT_PORT=8501
+   FASTAPI_PORT=8000
+   FASTAPI_HOST=0.0.0.0
+
+   # Ollama local
+   LLM_PORT=11434
+   LLM_MODEL=qwen2.5-coder:7b   # use um modelo que apareça em `ollama list`
+   LLM_BASE_URL=http://host.docker.internal
+   OPENAI_API_KEY=dummy         # exigida pelo compose, não é usada pelo Ollama
+
+   # Datadog (opcional: sem chave, os traces não são enviados)
+   DD_API_KEY=
+   DD_SITE=datadoghq.com        # o site da sua conta Datadog
+   DD_ENV=local
    ```
 
-   Sem esse arquivo, o `docker compose` avisa `The "STREAMLIT_PORT" variable is not set` e falha com `no port specified`.
-
-2. Construa a imagem. O compose desta etapa usa a imagem local `workshop-llm-obs-chatbot-base:latest`, que não existe em nenhum registry:
+2. Gere o `corp-ca.pem` com os certificados do seu Mac. O compose monta esse arquivo no backend para que o envio de traces ao Datadog funcione atrás de proxy corporativo (que intercepta o HTTPS). O arquivo é local e está no `.gitignore`.
 
    ```bash
-   docker build -t workshop-llm-obs-chatbot-base:latest ./chatbot/app
+   security find-certificate -a -p /Library/Keychains/System.keychain /System/Library/Keychains/SystemRootCertificates.keychain > corp-ca.pem
    ```
 
-3. Suba o chatbot:
+   Faça isso **antes** do `docker compose up`. Se o arquivo não existir, o Docker cria uma pasta com esse nome e o backend não sobe direito. Em Linux, aponte o volume para o bundle do sistema (por exemplo `/etc/ssl/certs/ca-certificates.crt`).
+
+3. Suba os containers:
 
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 
-4. Abra http://localhost:8501 e teste com `hello`, `price`, `safe`, `how` ou `where`. Qualquer outra mensagem recebe a resposta padrão.
+4. Abra http://localhost:8501 e converse. Teste o backend direto:
 
-### Problemas conhecidos
+   ```bash
+   curl -X POST localhost:8000/chat -H 'content-type: application/json' -d '{"prompt":"hello"}'
+   ```
+
+5. Para ver os traces, abra **LLM Observability** no Datadog e procure a app `quantumhound-chatbot`.
+
+## Problemas encontrados
 
 | Sintoma | Causa | Solução |
 |---------|-------|---------|
-| `pull access denied for workshop-llm-obs-chatbot-base` | A imagem é local e ainda não foi construída | Passo 2 de "Como rodar" |
-| `no port specified: :<empty>` | Faltou o `.env` | Passo 1 de "Como rodar" |
-| O chat sempre devolve o mesmo texto | Nenhuma palavra-chave foi reconhecida (não há LLM nesta etapa) | Use as palavras da tabela. O LLM vem na etapa 2 |
+| `pull access denied for workshop-llm-obs-...` | Imagens base não existem em nenhum registry | `build:` no compose |
+| `no port specified: :<empty>` e avisos de variável não definida | Faltava o `.env` | Criar o `.env` acima |
+| Chat não responde, ou só devolve texto padrão | Na etapa 1 o chat não usa LLM, só palavras-chave | Etapa 2 |
+| `Span started with LLMObs disabled` nos logs do `api` | Compose sem as variáveis `DD_*` e sem `ddtrace-run` | Variáveis e `ddtrace-run` adicionados na etapa 2 |
+| `SSLCertVerificationError: self-signed certificate in certificate chain` nos logs do `api`, e nada no Datadog | O proxy da empresa intercepta o HTTPS e o container não confia no certificado | Montar `corp-ca.pem` e definir `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE` no `backend_api` |
+| `external volume "ollama_models" not found` | Volume do Ollama containerizado, que não é mais usado | Volume removido do compose |
 
 ## Segurança
 
-O `.env` está no `.gitignore`. O repositório é público: nunca commite chaves.
+- O `.env` está no `.gitignore`. **Nunca commite `DD_API_KEY`.** O repositório é público.
+- O modelo roda localmente. Nenhum prompt sai da sua máquina, a não ser os traces enviados ao Datadog quando há `DD_API_KEY`.
 
-## Próxima etapa
+## Próximas etapas
 
-A etapa 2 troca as respostas fixas por um backend FastAPI que conversa com o Ollama local e envia traces ao Datadog (branch `step-2-ollama`).
+Planejadas, ainda não implementadas. As etapas seguintes entram como novas branches `step-N-*`.
