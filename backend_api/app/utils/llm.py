@@ -1,5 +1,4 @@
 from openai import OpenAI
-from typing import Dict, List
 from config import config
 
 LLM_URL = f"{config.LLM_BASE_URL}:{config.LLM_PORT}/v1"
@@ -16,7 +15,9 @@ def ask_the_llm(prompt: str) -> str:
     Calls the LLM with the given prompt
     """
     response = openai_client.chat.completions.create(
-        model=config.LLM_MODEL,
-        messages=[{"role": "user", "content": prompt}],
+        model="lama3.2:1b", # This is a bug!
+        messages=[
+            {"role": "user", "content": prompt},
+        ],
     )
     return response.choices[0].message.content

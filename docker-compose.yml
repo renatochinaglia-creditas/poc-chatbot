@@ -18,6 +18,20 @@ services:
       - ./chatbot/app:/app
     networks:
       - llm_app
+  llm:
+    container_name: locallama
+    image: ollama/ollama:0.21.2
+    ports:
+      - "127.0.0.1:11435:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+      - ./corp-ca.pem:/etc/ssl/certs/ca-certificates.crt:ro
+    networks:
+      - llm_app
+    deploy:
+      resources:
+        limits:
+          memory: 4GiB
   backend_api:
     container_name: api
     build: ./backend_api/app
@@ -51,8 +65,13 @@ services:
           --reload",
       ]
     restart: on-failure
+    depends_on:
+      - llm
     networks:
       - llm_app
+
+volumes:
+  ollama_models:
 
 networks:
   llm_app:
