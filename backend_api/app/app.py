@@ -1,8 +1,11 @@
 from fastapi import FastAPI, Response
+from fastapi.responses import JSONResponse
 from utils.llm import ask_the_llm
+# add ddtrace import here
+
+# add ddtrace method to enable Agent Observability here
 
 app = FastAPI()
-
 
 @app.get("/ask")
 def ask(prompt: str | None):
@@ -18,8 +21,8 @@ def ask(prompt: str | None):
 
 
 @app.get("/health")
-def health_check():
+def health():
     """
     Simple health check endpoint that returns a 200 status code.
     """
-    return Response(content="OK", media_type="text/plain")
+    return JSONResponse(content={"status": "ok"}, status_code=200)

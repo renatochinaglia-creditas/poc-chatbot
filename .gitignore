@@ -220,3 +220,6 @@ __marimo__/
 .streamlit/secrets.toml
 corp-ca.pem
 corp-ca.pem
+
+# ChromaDB (vetores gerados pela ingestão)
+chroma_data/

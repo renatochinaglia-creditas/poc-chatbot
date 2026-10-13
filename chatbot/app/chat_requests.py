@@ -26,3 +26,4 @@ def generate_response(prompt: str) -> str:
             "success": False,
             "error": f"API Error {str(e)}: See Datadog trace for details",
         }
+

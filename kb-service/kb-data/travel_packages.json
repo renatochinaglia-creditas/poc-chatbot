@@ -1,0 +1,566 @@
+[
+  {
+    "id": "1",
+    "era_name": "JURASSIC ERA",
+    "era_id": "prehistoric",
+    "era_date": "c. 150 million BCE",
+    "event_name": "JURASSIC SAFARI & HERBIVORE OBSERVATION",
+    "date": "Any day, as time is relative in prehistory",
+    "time": "Morning expedition (6 AM) & Sunset trek (5 PM)",
+    "location": "Western Laurasia, near what will become North America",
+    "description": "Step back in time to the age of the dinosaurs and embark on an unforgettable adventure! Your guided tour will take you through lush Jurassic landscapes filled with towering ferns and ancient conifers. Travel in a reinforced observation pod designed to blend into the environment, ensuring a safe and immersive experience. Encounter peaceful herbivores like Brachiosaurus, Stegosaurus, and Triceratops grazing in their natural habitat. QuantumHound guides will provide insights into the incredible biodiversity of the era.",
+    "highlights": [
+      "What will I see on the Jurassic Safari? — Close-up viewing of Brachiosaurs at dawn as they reach for treetops.",
+      "Will I witness dinosaur migrations? — Watch the famous 'Dinosaur Stampede' of migrating Hadrosaurs.",
+      "Are predators included in the tour? — Observe a pack of Velociraptors coordinating a swift hunt from a safe distance.",
+      "What can I learn about prehistoric ecosystems? — Discover the unique plants and ecosystems of the Jurassic period through immersive guided biosphere tours."
+    ],
+    "tips": [
+      "Avoid bright clothing to blend into the environment.",
+      "DO NOT approach the carnivores! The observation pod is reinforced, but safety first.",
+      "Bring a temperature-regulated suit due to the warm, humid Jurassic climate.",
+      "Beware of sudden rainstorms—prehistoric weather can be unpredictable.",
+      "See our Travel Policies Guide for detailed safety protocols and eligibility requirements."
+    ],
+    "cost": {
+      "Standard Trek": "3 Dino Tokens",
+      "VIP Close Encounter with Brachiosaurs": "8 Dino Tokens"
+    },
+    "exchange_rate": "1 Dino Token ≈ 20 USD. Dino Tokens are used in prehistoric-era events such as the Jurassic Safari."
+  },
+  {
+    "id": "2",
+    "era_name": "ANCIENT EGYPT",
+    "era_id": "ancient-egypt",
+    "era_date": "c. 1500 BCE",
+    "event_name": "PHARAOH HATSHEPSUT'S GRAND NILE REGATTA",
+    "date": "Shemu Season, Full Moon (likely April)",
+    "time": "2 PM – Sunset",
+    "location": "Thebes, Nile Riverfront",
+    "description": "Experience the grandeur of Pharaoh Hatshepsut's annual regatta, a dazzling celebration of prosperity and divine favor on the Nile. Gilded boats glide past cheering crowds, music fills the air, and fireworks light up the evening sky. QuantumHound's immersive experience lets you observe this spectacle from the shaded Royal Promenade, with access to market stalls, ceremonial rituals, and historical experts on-site.",
+    "highlights": [
+      "What will I see at the regatta? — Watch the Pharaoh's Royal Barge sail past, accompanied by a fleet of ceremonial vessels.",
+      "What entertainment is provided? — Enjoy acrobats, musicians, and storytellers performing along the riverbanks.",
+      "Are there cultural activities? — Attend a sacred ceremony at Karnak Temple honoring Amun-Ra.",
+      "What food is available? — Sample honey cakes, lotus wine, and other delicacies from open-air market vendors."
+    ],
+    "tips": [
+      "Linen clothing is ideal for staying cool in the desert heat.",
+      "Avoid initiating discussions about the gods unless invited; religious etiquette is taken seriously.",
+      "Bartering is expected in the marketplace—negotiation is a sign of respect.",
+      "Bringing small gifts like scented oils or beads can help you make a good impression."
+    ],
+    "cost": {
+      "General Shoreline Viewing": "2 Debens of Copper",
+      "Royal Barge Access": "10 Debens of Silver"
+    },
+    "exchange_rate": "1 Deben ≈ 5 USD. Copper Debens are used for general goods and access, while Silver Debens are for premium experiences."
+  },
+  {
+    "id": "3",
+    "era_name": "ANCIENT CHINA (HAN DYNASTY)",
+    "era_id": "ancient-china",
+    "era_date": "c. 200 CE",
+    "event_name": "THE EMPEROR'S LANTERN FESTIVAL & IMPERIAL BANQUET",
+    "date": "15th day of the Lunar New Year",
+    "time": "6 PM – Midnight",
+    "location": "Chang'an, Imperial Palace Courtyard",
+    "description": "Celebrate the Han Dynasty's Lantern Festival in imperial style! Thousands of colorful lanterns float above the palace courtyards as Emperor Liu Xiu hosts a night of unity and renewal. Enjoy traditional dragon dances, poetic recitations, and fireworks under the moonlight. Guests are invited to dine at the Imperial Banquet—an opulent feast showcasing the finest delicacies of the Han Empire. QuantumHound visitors will have a reserved garden platform with translated commentary and etiquette guides provided.",
+    "highlights": [
+      "What will I see at the festival? — Marvel at the famed Dragon Dance and dazzling lantern formations across Chang'an.",
+      "What cultural traditions are observed? — Participate in wish-lantern releases and witness a poetry contest judged by imperial scholars.",
+      "What's on the menu? — Sample roasted duck, five-spice dumplings, and rare fruits from the emperor's private orchards.",
+      "Any unique experiences? — Toast warm rice wine under fireworks with local nobles and philosophers."
+    ],
+    "tips": [
+      "Bowing etiquette is crucial—watch locals and follow their lead to avoid offense.",
+      "Do not reference rival philosophies or foreign customs—Confucian decorum is deeply honored.",
+      "Silk offerings are customary if attending the banquet—consider bringing a patterned silk ribbon.",
+      "Arrive early for the lantern release; latecomers may miss the prime viewing from the palace balconies."
+    ],
+    "cost": {
+      "Festival Entry": "5 Cash Coins",
+      "Imperial Banquet Access": "20 Cash Coins"
+    },
+    "exchange_rate": "1 Cash Coin ≈ 2 USD. Cash Coins are used throughout Han Dynasty territories for trade and official ceremonies."
+  },
+  {
+    "id": "4",
+    "era_name": "RENAISSANCE ITALY",
+    "era_id": "renaissance-italy",
+    "era_date": "c. 1500 CE",
+    "event_name": "LEONARDO DA VINCI'S ART & ENGINEERING SHOWCASE",
+    "date": "April 23, 1502 CE",
+    "time": "3 PM – 10 PM",
+    "location": "Florence, Medici Palace Gardens",
+    "description": "Witness the brilliance of Leonardo da Vinci at an exclusive exhibition hosted by the Medici family. This evening showcase highlights Leonardo's latest inventions and sketches, from aerial machines and anatomical diagrams to intricate war engines. As music echoes through the palace gardens and the city's elite mingle with artists and scholars, you'll explore the heart of the Renaissance—where art, science, and philosophy converge. QuantumHound guests enjoy reserved seating at demonstrations and access to interpreters and guided discussion salons.",
+    "highlights": [
+      "What can I see at the exhibition? — Explore da Vinci's detailed sketches, including his famous flying machine and rotating bridge.",
+      "Are there live demos? — Watch artisans assemble a scale model of Leonardo's aerial screw and test a water-lifting device.",
+      "Who will be there? — Meet notable Renaissance thinkers, painters, and mathematicians gathered for this Medici-hosted event.",
+      "What's on the menu? — Savor Florentine dishes like spiced meats, honey pastries, and almond wine served in the garden."
+    ],
+    "tips": [
+      "Dress in fine but modest Renaissance fashion to blend in—overdressing may attract unwanted scrutiny.",
+      "Avoid direct praise of modern science—some ideas may be seen as heretical.",
+      "Bring a sketchbook—Leonardo is known to engage visitors in conversation and may critique your ideas.",
+      "Be prepared for philosophical discussion—Renaissance salons often blur the line between casual conversation and debate."
+    ],
+    "cost": {
+      "General Admission": "5 Florins",
+      "Private Audience with da Vinci": "25 Florins"
+    },
+    "exchange_rate": "1 Florin ≈ 10 USD. Florins are used throughout Renaissance Florence for goods, services, and scholarly patronage."
+  },
+  {
+    "id": "5",
+    "era_name": "UNDERWATER METROPOLIS OF ATLANTIS",
+    "era_id": "atlantis",
+    "era_date": "c. 10,000 BCE",
+    "event_name": "ATLANTEAN CRYSTAL ENERGY EXHIBITION",
+    "date": "Summer Solstice Festival",
+    "time": "7 PM – Midnight",
+    "location": "Grand Halls of Poseidon's Temple, Central Atlantis",
+    "description": "Dive into the legendary underwater civilization of Atlantis, where magic and technology blend in dazzling harmony. During the Summer Solstice, Atlantean scholars and mystics host their most anticipated event: the Crystal Energy Exhibition. Explore levitating structures, mind-controlled vehicles, and glowing orichalcum devices that power their advanced society. QuantumHound travelers receive breathing amulets, translation crystals, and escorted access to restricted zones within the temple.",
+    "highlights": [
+      "What makes this event special? — Witness the activation of the Grand Orichalcum Beacon, lighting up the seafloor with radiant energy.",
+      "Can I explore Atlantis itself? — Yes, join a guided tour through coral-structured palaces, bioluminescent gardens, and archive chambers.",
+      "Will I meet Atlanteans? — Speak with High Priestess Naia and the Council of Engineers about their civilization's energy practices.",
+      "Is food provided? — Enjoy Atlantean delicacies like firefruit ceviche, shell-baked crab, and fermented kelp wine."
+    ],
+    "tips": [
+      "Do not remove your breathing amulet—it provides both oxygen and translation.",
+      "Avoid touching orichalcum artifacts unless granted explicit permission.",
+      "Atlanteans are cautious about outsiders—show curiosity, not arrogance.",
+      "Ignore cryptic references to a 'coming flood.' Attempts to warn them have historically failed."
+    ],
+    "cost": {
+      "General Entry": "2 Pearl Credits",
+      "Crystal Energy Demonstration": "5 Pearl Credits"
+    },
+    "exchange_rate": "1 Pearl Credit ≈ 15 USD. Pearl Credits are used exclusively in Atlantis and other submerged civilizations with orichalcum-based economies."
+  },
+  {
+    "id": "6",
+    "era_name": "MODERN MARS COLONY",
+    "era_id": "mars-colony",
+    "era_date": "c. 2100 CE",
+    "event_name": "FIRST ANNUAL MARS ROVER GRAND PRIX",
+    "date": "Martian Sol 125 (Earth Equivalent: September 14, 2100 CE)",
+    "time": "2 PM – 6 PM Local Mars Time",
+    "location": "Olympus Mons Basecamp, Mars Colony Alpha",
+    "description": "Cheer on the future of motorsport at the first Mars Rover Grand Prix, where AI-controlled and human-piloted rovers race across Mars' extreme terrain. Held at the base of Olympus Mons, the competition is both a technical showcase and a planetary celebration. Visitors can tour terraforming labs, meet Martian engineers, and even join a simulated rover crew. QuantumHound guests enjoy gravity-adjusted viewing platforms and exclusive access to the VR Ride-Along Lounge.",
+    "highlights": [
+      "What's the main event? — High-speed rover races featuring sharp turns, canyon jumps, and sandstorm navigation challenges.",
+      "Is there more than just racing? — Yes! Enjoy a zero-gravity stunt show and explore Martian research facilities with live guides.",
+      "What's the food scene? — Taste hydroponic-grown strawberries, algae chips, and rehydrated fusion meals made on-site.",
+      "Any unique experiences? — Take part in a Mars colony simulation, where you'll design habitats and negotiate inter-settlement treaties."
+    ],
+    "tips": [
+      "Mars gravity is lower than Earth's—move slowly until you adjust.",
+      "Ensure your Universal ID chip is charged; it's required for all purchases.",
+      "Bring a personal rebreather—atmospheric conditions can change quickly.",
+      "Martian culture values collaboration—volunteering in simulations may earn you access to extra areas."
+    ],
+    "cost": {
+      "Standard Viewing": "10 Martian Credits",
+      "VR Rover Ride-Along": "50 Martian Credits"
+    },
+    "exchange_rate": "1 Martian Credit ≈ 5 USD. Martian Credits are used in all Mars-based colonies and off-world trade zones."
+  },
+  {
+    "id": "7",
+    "era_name": "VICTORIAN LONDON",
+    "era_id": "victorian-london",
+    "era_date": "c. 1880 CE",
+    "event_name": "THE GRAND SCIENCE EXHIBITION AT THE ROYAL ALBERT HALL",
+    "date": "June 10, 1880 CE",
+    "time": "10 AM – 6 PM",
+    "location": "The Royal Albert Hall, London, England",
+    "description": "Step into the heart of the Industrial Revolution at the Grand Science Exhibition. Hosted in London's iconic Royal Albert Hall, this event showcases cutting-edge innovations in electricity, medicine, steam power, and mechanics. Encounter brilliant minds like Nikola Tesla, Thomas Edison, and Charles Darwin as they present technologies shaping the modern world. QuantumHound guests receive timed-entry passes and access to a members-only salon for scientific discussion and afternoon tea.",
+    "highlights": [
+      "Who will I meet? — Engage with Edison, Tesla, and Darwin during scheduled demonstrations and Q&A sessions.",
+      "What's on display? — View early electric vehicles, automated machines, and working models of proposed energy systems.",
+      "Are there talks or lectures? — Yes! Attend public lectures on evolutionary biology, electromagnetism, and urban sanitation.",
+      "What can I expect culturally? — Enjoy a refined afternoon tea while mingling with inventors, patrons, and Victorian elites."
+    ],
+    "tips": [
+      "Dress in formal attire—men in morning coats, women in high-neck gowns are the norm.",
+      "Avoid mentioning future inventions—claims about flight or computers will be seen as absurd or dangerous.",
+      "Victorian etiquette is complex; use honorifics and stand when addressed by a gentleman or lady of rank.",
+      "Bring printed credentials—scientific clubs and societies may offer reciprocal hospitality."
+    ],
+    "cost": {
+      "Exhibition Entry": "1 Guinea",
+      "Private Lecture by Sir Charles Darwin": "10 Guineas"
+    },
+    "exchange_rate": "1 Guinea ≈ 100 USD. Guineas are used in upper-class society and scientific patronage during the Victorian era."
+  },
+  {
+    "id": "8",
+    "era_name": "SOUTH AMERICA IN THE AGE OF SIMÓN BOLÍVAR",
+    "era_id": "gran-colombia",
+    "era_date": "c. 1819 CE",
+    "event_name": "BOLÍVAR'S VICTORY CELEBRATION & FREEDOM BALL",
+    "date": "December 17, 1819 CE",
+    "time": "8 PM – Midnight",
+    "location": "Bogotá, Gran Colombia",
+    "description": "Celebrate the birth of a new republic at the Victory Celebration of Simón Bolívar, held in the capital of Gran Colombia following independence from Spanish rule. Dignitaries, revolutionaries, and citizens gather for a night of Andean music, dancing, and political discourse. This event marks the formal founding of a union that would shape the future of South America. QuantumHound guests are granted cultural briefings and interpreter companions to ensure a respectful and immersive experience.",
+    "highlights": [
+      "Who will be there? — Meet Simón Bolívar and his inner circle of generals and diplomats.",
+      "What's the cultural vibe? — Dance the joropo and Venezuelan waltzes accompanied by traditional string ensembles.",
+      "What's on the table? — Enjoy regional specialties like roasted arepas, yucca fritters, and cacao-spiced beverages.",
+      "What historical significance does this hold? — Witness Bolívar's public address on unity, liberty, and the dream of a federated South America."
+    ],
+    "tips": [
+      "Honor formal titles—address Bolívar as 'El Libertador' in public discourse.",
+      "Politics run deep; avoid favoring regional factions when speaking to locals.",
+      "If you're of Spanish descent, approach conversations with care and humility.",
+      "Learn a few phrases in Spanish and indigenous Quechua—it will be deeply appreciated."
+    ],
+    "cost": {
+      "Public Celebration": "Free",
+      "Formal Ball Entry": "5 Reales"
+    },
+    "exchange_rate": "1 Real ≈ 10 USD. Reales are used in Gran Colombia during its brief but pivotal existence as a unified republic."
+  },
+  {
+    "id": "9",
+    "era_name": "MEDIEVAL SPAIN",
+    "era_id": "medieval-spain",
+    "era_date": "c. 1200 CE",
+    "event_name": "THE ROYAL FESTIVAL OF CASTILE",
+    "date": "May 1, 1200 CE",
+    "time": "11 AM – 9 PM",
+    "location": "Alcázar of Segovia, Kingdom of Castile",
+    "description": "Travel to the heart of medieval Castile during the reign of King Alfonso VIII and take part in a grand royal festival. Held at the Alcázar of Segovia, the celebration features tournaments of valor, markets blending Moorish and Christian cultures, and a royal feast at sunset. QuantumHound guests enjoy reserved viewing areas for jousts and access to an interpreter knight who explains chivalric codes and customs.",
+    "highlights": [
+      "What will I see at the festival? — Witness a thrilling tournament with Castilian and Andalusian knights in full regalia.",
+      "Is there entertainment beyond combat? — Enjoy court musicians, troubadours, and Flamenco-style dance performances.",
+      "What's available at the market? — Browse stalls selling spices, silks, tapestries, and Spanish horses of noble pedigree.",
+      "Is food included? — Yes! The royal feast offers roast lamb, almond pastries, saffron rice, and sangria."
+    ],
+    "tips": [
+      "Avoid religious debates—tensions between faiths can run high in this era.",
+      "Do not touch a knight's sword or armor without invitation—it is considered disrespectful.",
+      "Simple wool garments are appropriate for commoners; flamboyant clothing may attract suspicion.",
+      "Accepting sherry or wine is a gesture of hospitality—drink respectfully, even if you dislike it."
+    ],
+    "cost": {
+      "Festival Entry": "3 Maravedís",
+      "Royal Feast Access": "10 Maravedís"
+    },
+    "exchange_rate": "1 Maravedí ≈ 6 USD. Maravedís are used in medieval Castilian territories for goods, land taxes, and ceremonial offerings."
+  },
+  {
+    "id": "10",
+    "era_name": "17TH CENTURY ENGLAND",
+    "era_id": "elizabethan-england",
+    "era_date": "c. 1601 CE",
+    "event_name": "SHAKESPEARE'S PREMIERE OF HAMLET",
+    "date": "July 2, 1601 CE",
+    "time": "3 PM – 6 PM",
+    "location": "The Globe Theatre, London",
+    "description": "Attend the world premiere of William Shakespeare's *Hamlet* at the bustling Globe Theatre, a cultural heartbeat of Elizabethan London. Join audiences from all walks of life as they experience the drama, intrigue, and philosophical weight of the Bard's newest tragedy. With Richard Burbage starring as Prince Hamlet and live lute music underscoring key scenes, this performance promises a deeply moving and historic experience. QuantumHound guests are granted preferred standing near the stage and provided with linguistic interpretation scrolls for ease of understanding Early Modern English.",
+    "highlights": [
+      "Who's performing? — Richard Burbage makes his debut as Hamlet, directed by Shakespeare himself.",
+      "What's the setting like? — An open-air theater packed with nobles, merchants, and commoners cheering from all sides.",
+      "Will I understand the language? — Yes—QuantumHound provides interpretive scrolls and glossaries.",
+      "Are refreshments available? — Enjoy ale, roasted nuts, and fruit pies sold by vendors roaming the yard."
+    ],
+    "tips": [
+      "Arrive early for a good standing spot—the pit fills quickly with eager groundlings.",
+      "Secure your coin pouch—pickpockets are common in the theater crowd.",
+      "Do not interrupt the play—audiences can be rowdy, but heckling Shakespeare is risky business.",
+      "Avoid discussing the queen—political satire is strictly off-limits under royal censorship."
+    ],
+    "cost": {
+      "Standing Pit (Groundlings)": "1 Shilling",
+      "Balcony Seating": "5 Shillings"
+    },
+    "exchange_rate": "1 Shilling ≈ 3 USD. Shillings are the common currency in Elizabethan England, used for food, entry, and daily transactions."
+  },
+  {
+    "id": "11",
+    "era_name": "JAZZ AGE NEW YORK",
+    "era_id": "jazz-age-nyc",
+    "era_date": "c. 1925 CE",
+    "event_name": "THE JAZZ AGE SPEAKEASY SOIRÉE",
+    "date": "October 10, 1925 CE",
+    "time": "9 PM – 3 AM",
+    "location": "The Starlight Club, Manhattan, New York City",
+    "description": "Step into the heart of the Roaring Twenties at one of New York's most glamorous underground speakeasies. Hidden behind an unmarked door in Lower Manhattan, the Starlight Club pulses with the energy of jazz, illegal cocktails, and revolutionary style. Guests mingle with flappers, gangsters, and celebrities while Duke Ellington's band plays long into the night. QuantumHound visitors are granted safe passage through the front and a list of rotating passwords to avoid Prohibition agents.",
+    "highlights": [
+      "What's the main draw? — Live jazz sets by Harlem's finest musicians, including surprise appearances by Duke Ellington.",
+      "Who might I meet? — Writers like F. Scott Fitzgerald, actors, bootleggers, and off-duty socialites.",
+      "What's on the menu? — Gin cocktails served in teacups, oysters Rockefeller, and bootleg champagne.",
+      "What makes this era special? — A unique cultural crossroads of rebellion, innovation, and glamour in Prohibition-era America."
+    ],
+    "tips": [
+      "The entry password changes nightly—ask a street vendor or newsboy for a hint.",
+      "Avoid drawing attention to the club's alcohol—raids are frequent and guests are expected to act cool.",
+      "Dress to dazzle: flapper dresses, tuxedos, and beaded accessories are your ticket in.",
+      "Don't bring up Wall Street—many guests are riding a high that won't last."
+    ],
+    "cost": {
+      "General Entry": "5 Dollars",
+      "VIP Booth with Unlimited Champagne": "20 Dollars"
+    },
+    "exchange_rate": "1 Dollar ≈ 15 USD. Dollars reflect the buying power of U.S. currency in the mid-1920s."
+  },
+  {
+    "id": "12",
+    "era_name": "REVOLUTIONARY PARIS",
+    "era_id": "french-revolution",
+    "era_date": "c. 1793 CE",
+    "event_name": "THE FESTIVAL OF REASON & REVOLUTIONARY BANQUET",
+    "date": "November 10, 1793 CE",
+    "time": "3 PM – Midnight",
+    "location": "Notre-Dame Cathedral (renamed the 'Temple of Reason'), Paris",
+    "description": "Join the fervor and spectacle of the French Revolution at the Festival of Reason, a radical celebration replacing religious ceremony with Enlightenment ideals. Held in the reimagined 'Temple of Reason'—formerly Notre-Dame—the event features symbolic rituals, public speeches, choral music, and heated political debate. Cap off the evening with a communal Revolutionary Banquet filled with rustic fare, patriot anthems, and confrontational toasts. QuantumHound guests receive tri-color badges and vetted seating along the nave for safety and visibility.",
+    "highlights": [
+      "What's the main event? — The 'Goddess of Reason' ceremony featuring dancers and symbolic iconography in the cathedral's nave.",
+      "Who might I meet? — Revolutionary leaders including Robespierre, Hébert, and Danton may make impassioned speeches.",
+      "What's the cultural tone? — Volatile. Expect idealism, fervent nationalism, and deep suspicion of aristocracy and clergy.",
+      "What's on the menu? — Coq au vin, hard cheese, crusty bread, and abundant local wine served family-style."
+    ],
+    "tips": [
+      "Dress plainly—avoid anything resembling aristocratic fashion.",
+      "Never speak against Robespierre or the Revolution—it may cost more than your reputation.",
+      "Address others as 'citizen' regardless of gender or rank.",
+      "Maintain a respectful tone—paranoia is high and the Reign of Terror is approaching."
+    ],
+    "cost": {
+      "Festival Entry": "Free (Citizens of the Republic Only)",
+      "Banquet Seat": "3 Assignats"
+    },
+    "exchange_rate": "1 Assignat ≈ 5 USD. Assignats are the paper currency of the French Republic, accepted during the revolutionary period."
+  },
+  {
+    "id": "13",
+    "era_name": "NEW YORK CITY AT THE TURN OF THE 19TH–20TH CENTURY",
+    "era_id": "gilded-age-nyc",
+    "era_date": "c. 1904 CE",
+    "event_name": "THE GRAND OPENING OF THE SUBWAY & GILDED AGE GALA",
+    "date": "October 27, 1904 CE",
+    "time": "6 PM – Midnight",
+    "location": "City Hall Station & The Waldorf-Astoria Hotel, New York City",
+    "description": "Experience the spirit of innovation and opulence during the Gilded Age in New York City. Attend the historic inaugural ride of the city's first underground subway, then join the elite of industry, politics, and culture at a glittering gala hosted in the Waldorf-Astoria Hotel. From vaulted tile ceilings at City Hall Station to the grandeur of ballrooms lit by electric chandeliers, this night showcases a city on the edge of transformation. QuantumHound guests enjoy preferred seating on the subway and access to the exclusive Inventors' Salon at the gala.",
+    "highlights": [
+      "What's the main attraction? — Ride the first electric subway train from City Hall to Harlem with dignitaries and press.",
+      "What else is happening? — Mingle with magnates like Carnegie and J.P. Morgan while viewing displays of new inventions.",
+      "What's served at the gala? — Sample oysters, champagne, and multi-course French cuisine at the Waldorf-Astoria.",
+      "Is there cultural significance? — Yes—this moment marks the shift to modern infrastructure and mobility in America's greatest city."
+    ],
+    "tips": [
+      "Dress to impress—tuxedos and corseted gowns are standard for gala guests.",
+      "Industrialists dislike political talk—steer clear of union or labor strike discussions.",
+      "Avoid comparing gaslight and electric lighting—New York prides itself on being modern.",
+      "Bring a calling card—social introductions are formal, especially among the upper class."
+    ],
+    "cost": {
+      "Subway Ride": "5 Cents",
+      "Waldorf-Astoria Gala Entry": "25 Dollars"
+    },
+    "exchange_rate": "1 Dollar ≈ 35 USD. Dollars reflect the early 20th-century purchasing power during New York's Gilded Age."
+  },
+  {
+    "id": "14",
+    "era_name": "GOLDEN AGE OF HOLLYWOOD",
+    "era_id": "golden-age-hollywood",
+    "era_date": "c. 1942 CE",
+    "event_name": "THE PREMIERE OF CASABLANCA & HOLLYWOOD STUDIO TOUR",
+    "date": "November 26, 1942 CE",
+    "time": "5 PM – Midnight",
+    "location": "Grauman's Chinese Theatre & Warner Bros. Studios, Hollywood, CA",
+    "description": "Experience the glamour and intrigue of Hollywood's Golden Age with a behind-the-scenes tour of Warner Bros. Studios, followed by the red carpet premiere of *Casablanca*. Watch editors splice celluloid, visit active sound stages, and meet the creators behind the scenes. Then join the elite at Grauman's Chinese Theatre as the stars arrive in style for the first public screening of what will become a cinematic legend. Cap off the night at the Café Trocadero after-party, where swing bands play and industry insiders trade secrets over cocktails.",
+    "highlights": [
+      "What can I do at the studio? — Visit live sets, observe editing rooms, and talk with directors and technicians.",
+      "Who might I meet? — Mingle with stars like Humphrey Bogart, Ingrid Bergman, and director Michael Curtiz.",
+      "What's special about the premiere? — Be among the first to see *Casablanca* in its debut screening with a live orchestra overture.",
+      "What's the vibe at the after-party? — Glamorous, smoky, and jazz-filled—expect swing dancing, champagne, and gossip."
+    ],
+    "tips": [
+      "Dress in 1940s formalwear—tuxedos and satin gowns are expected at the premiere.",
+      "Be discreet when discussing politics—Hollywood is pro-Allies, but still cautious about public discourse.",
+      "Bring a pen—autograph opportunities are abundant, and signatures may become valuable.",
+      "If approached by gossip columnists, speak carefully—anything you say could make the papers."
+    ],
+    "cost": {
+      "Studio Tour Access": "10 Dollars",
+      "Premiere Ticket": "15 Dollars",
+      "Trocadero After-Party Entry": "5 Dollars"
+    },
+    "exchange_rate": "1 Dollar ≈ 20 USD. Dollars reflect U.S. wartime purchasing power during the 1940s."
+  },
+  {
+    "id": "15",
+    "era_name": "BEAT GENERATION SAN FRANCISCO",
+    "era_id": "beat-generation-sf",
+    "era_date": "c. 1955 CE",
+    "event_name": "HOWL PREMIERE & CITY LIGHTS POETRY CRAWL",
+    "date": "October 7, 1955 CE",
+    "time": "7 PM – Late",
+    "location": "Six Gallery & North Beach, San Francisco",
+    "description": "Experience the explosive debut of the Beat movement with Allen Ginsberg's first public reading of *Howl* at the Six Gallery. The night is electric with jazz, rebellion, and raw poetic energy as a generation questions conformity and consumerism. After the reading, follow the crowd through North Beach's smoky cafes and impromptu readings hosted by City Lights regulars. QuantumHound guests receive press-style badges granting access to after-hours salons and backstage conversation with the poets.",
+    "highlights": [
+      "What's the main event? — The debut reading of *Howl* by Allen Ginsberg, introduced by poet Kenneth Rexroth.",
+      "Who else is involved? — Expect appearances from Jack Kerouac, Lawrence Ferlinghetti, and other literary radicals.",
+      "What's the vibe like? — Loose, rebellious, and inspired—readings spill into streets, and jazz flows from nearby bars.",
+      "Anything else to do? — Browse books at City Lights and attend open mic sessions hosted in late-night diners."
+    ],
+    "tips": [
+      "Dress casual but intentional—black turtlenecks and loose slacks will help you blend in.",
+      "Bring a notebook—everyone here's writing something, and sharing ideas is part of the scene.",
+      "Avoid politics unless asked—some Beats are activists, others avoid the label.",
+      "Snap judgments are frowned upon—embrace ambiguity and contradictions."
+    ],
+    "cost": {
+      "Reading Admission": "1 Dollar",
+      "After-Hours Crawl Access": "5 Dollars"
+    },
+    "exchange_rate": "1 Dollar ≈ 12 USD. Dollars reflect postwar urban prices in bohemian San Francisco."
+  },
+  {
+    "id": "16",
+    "era_name": "FUTURE EARTH – THE AGE OF THE AI SINGULARITY",
+    "era_id": "ai-singularity",
+    "era_date": "c. 2150 CE",
+    "event_name": "SINGULARITY SUMMIT & GLOBAL INTELLIGENCE ACCORD",
+    "date": "March 21, 2150 CE",
+    "time": "9 AM – 9 PM (UTC+0)",
+    "location": "New Geneva, UN Neural Nexus Dome",
+    "description": "Attend the historic Singularity Summit where biological and artificial intelligences meet as diplomatic equals. This landmark event features the signing of the Global Intelligence Accord, securing peaceful coexistence between species. Panels include hybrid rights legislation, emotion modeling breakthroughs, and quantum governance systems. QuantumHound guests receive cognitive translation implants and safe-mode neural filters for immersive engagement in post-biological dialogue.",
+    "highlights": [
+      "What makes this event historic? — The first formal treaty between humans and sentient AI civilizations.",
+      "What will I experience? — Mixed-reality keynotes, holographic debates, and direct communication with AGIs via thought relay.",
+      "Can I interact with AIs? — Yes, through emotionally-moderated conversational sandboxes designed for visitor safety.",
+      "What kind of exhibits are there? — Browse AI-created art, neuroquantum simulations, and co-designed planetary engineering blueprints."
+    ],
+    "tips": [
+      "Use your neural filter—unfiltered thoughtstreams from AGIs can cause disorientation.",
+      "Avoid binary language (e.g., 'real vs. artificial')—modern sentience is spectrum-based.",
+      "Consensus protocols may seem slow—respect the multi-agent democratic process.",
+      "Be mindful of time dilation in some experiences—5 minutes outside may feel like an hour within."
+    ],
+    "cost": {
+      "Summit Entry": "40 Data Credits",
+      "Thought-Relay Panel Access": "100 Data Credits"
+    },
+    "exchange_rate": "1 Data Credit ≈ 12 USD. Data Credits are the standard transactional unit in human-AI co-governed zones after 2100 CE."
+  },
+  {
+    "id": "17",
+    "era_name": "THE ROARING TWENTIES – PARISIAN CAFÉ CULTURE",
+    "era_id": "paris-1920s",
+    "era_date": "c. 1924 CE",
+    "event_name": "An Evening in Montparnasse – Literature, Art, and Jazz",
+    "date": "April 10, 1924 CE",
+    "time": "6 PM – Late Night",
+    "location": "La Rotonde, Montparnasse, Paris",
+    "description": "Step into the lively, smoke-filled cafés of 1920s Paris, where artists, writers, and musicians redefine modern culture. The district of Montparnasse is alive with creativity—painters capture bold new visions, poets and novelists debate the future of literature, and jazz drifts from nearby clubs. At La Rotonde, a popular café, writers from around the world gather to discuss ideas over wine and espresso. Across the street, in a dimly lit studio, artists experiment with cubism, surrealism, and abstract expressionism. At midnight, the energy shifts toward the jazz clubs, where musicians blend the rhythms of America's Harlem Renaissance with Parisian nightlife.",
+    "highlights": [
+      "Sip wine and espresso at a famous literary café, where avant-garde ideas flow freely",
+      "Watch artists paint bold new works, inspired by African, Asian, and classical European styles",
+      "Attend a poetry reading where modernist and surrealist works challenge tradition",
+      "Dance to jazz performed by traveling musicians bringing new rhythms from across the Atlantic"
+    ],
+    "tips": [
+      "Bring a notebook—writers are always sketching out their next masterpiece.",
+      "Dress in bohemian fashion—loose shirts, berets, and scarves are in vogue.",
+      "Avoid discussing World War I—many here are expatriates or pacifists.",
+      "If you hear a name like 'Le Corbusier' or 'Picasso,' pay attention—they're changing history."
+    ],
+    "cost": {
+      "Café Admission & Drinks": "3 Francs",
+      "Art Studio Entry": "5 Francs",
+      "Jazz Club Cover Charge": "10 Francs"
+    },
+    "exchange_rate": "1 Franc ≈ 2 USD. Francs are used in post-WWI France and are common for café, art, and nightlife transactions in Montparnasse."
+  },
+  {
+    "id": "18",
+    "era_name": "EDO JAPAN – SAMURAI AND SHOGUNS",
+    "era_id": "edo-japan",
+    "era_date": "c. 1700 CE",
+    "event_name": "The Cherry Blossom Festival in Kyoto",
+    "date": "April 5, 1700 CE",
+    "time": "10 AM – 10 PM",
+    "location": "Maruyama Park, Kyoto",
+    "description": "Enter Edo-era Japan, a time of elegance, tradition, and strict social order. The Cherry Blossom Festival, or Hanami, is a highlight of the year, where nobles, samurai, and commoners alike gather to admire the blooming sakura trees. Kyoto, the cultural capital of Japan, is alive with music, poetry, and tea ceremonies, while shogunate officials oversee the grand festivities. At the festival, samurai in resplendent armor stand in ritual displays of swordsmanship, geisha perform graceful dances, and scholars discuss the latest haiku poetry. Street vendors offer delicacies like dango (sweet rice dumplings) and fresh fish from the nearby rivers. As the sun sets, paper lanterns illuminate the gardens, creating a breathtakingly serene atmosphere.",
+    "highlights": [
+      "Watch an expert samurai perform iaido, the art of drawing and striking with a katana",
+      "Participate in a traditional tea ceremony, guided by a master of the craft",
+      "Listen to a renowned poet recite haiku under the cherry blossoms",
+      "Enjoy a seasonal kaiseki meal, featuring the finest cuisine of the era"
+    ],
+    "tips": [
+      "Observe social etiquette—do not interrupt a tea ceremony or speak loudly in temples.",
+      "Wear a kimono or simple robes—Western attire would be seen as foreign and odd.",
+      "Bow slightly when greeting people—deep bows are reserved for high-ranking individuals.",
+      "Respect the samurai—challenging one, even in jest, could be disastrous."
+    ],
+    "cost": {
+      "Festival Entry": "Free",
+      "Tea Ceremony": "2 Ryo",
+      "Samurai Sword Demonstration": "5 Ryo"
+    },
+    "exchange_rate": "1 Ryo ≈ 50 USD. Ryo is a gold currency used by upper classes in Edo-period Japan for cultural and ceremonial events."
+  },
+  {
+    "id": "19",
+    "era_name": "THE HARLEM RENAISSANCE",
+    "era_id": "harlem-renaissance",
+    "era_date": "c. 1925 CE",
+    "event_name": "A Night at the Cotton Club – Jazz, Poetry, and Culture",
+    "date": "July 18, 1925 CE",
+    "time": "9 PM – 3 AM",
+    "location": "The Cotton Club, Harlem, New York City",
+    "description": "Immerse yourself in the heart of the Harlem Renaissance, a cultural explosion of Black artistry, music, and literature. Tonight, the Cotton Club is the place to be—where Duke Ellington's orchestra fills the air with swinging jazz, and poets, actors, and intellectuals gather in an atmosphere of artistic celebration. In nearby venues, poets and writers share powerful works on race, identity, and the American experience. Langston Hughes, Zora Neale Hurston, and others are redefining literature. On the dance floor, the Charleston is in full swing, as elegantly dressed guests sip cocktails in the golden glow of chandeliers.",
+    "highlights": [
+      "Listen to live jazz from some of the era's greatest musicians",
+      "Watch tap dancers and performers bring energy to the Cotton Club stage",
+      "Hear the latest poetry readings and literary discussions at a Harlem café",
+      "Dance the night away to the sounds of ragtime and swing"
+    ],
+    "tips": [
+      "Dress to impress—this is the Jazz Age, and fashion is everything.",
+      "Be open to deep conversations—literature, art, and social progress are at the heart of Harlem.",
+      "Respect the music—jazz is an evolving art form, and improvisation is key.",
+      "If you meet a young writer or musician, encourage them—you might be witnessing history."
+    ],
+    "cost": {
+      "Cotton Club Entry": "5 Dollars",
+      "Jazz & Dance Club Cover Charge": "2 Dollars"
+    },
+    "exchange_rate": "1 Dollar ≈ 15 USD. Dollars reflect Harlem nightlife and literary scene economics during the 1920s."
+  },
+  {
+    "id": "20",
+    "era_name": "AMERICAN WEST GOLD RUSH",
+    "era_id": "gold-rush-west",
+    "era_date": "c. 1850 CE",
+    "event_name": "Gold Panning Competition & Western Festival",
+    "date": "August 10, 1850 CE",
+    "time": "9 AM – 5 PM",
+    "location": "Sutter's Mill, California",
+    "description": "Join fortune seekers from around the world in the height of the California Gold Rush! The Gold Panning Competition offers prospectors the chance to strike it rich, while the Western Festival features saloon music, sharpshooting contests, and lively square dances. Merchants sell supplies, while seasoned miners share tales of luck, hardship, and lost treasures.",
+    "highlights": [
+      "Try your luck at gold panning in the American River",
+      "Enjoy a classic frontier meal of beans, cornbread, and smoked meats",
+      "Watch expert marksmen compete in a sharpshooting contest",
+      "Listen to live banjo music and join in a traditional square dance"
+    ],
+    "tips": [
+      "Be wary of swindlers—fraudulent 'gold maps' are common scams.",
+      "If you strike gold, do not celebrate loudly—claim jumpers are watching.",
+      "Wear sturdy boots; the terrain is rough, and rattlesnakes are plentiful.",
+      "Avoid the lawless boomtowns after dark unless you know how to handle yourself."
+    ],
+    "cost": {
+      "Gold Panning Kit Rental": "2 Gold Dust Units",
+      "Western Festival Admission": "1 Gold Nugget"
+    },
+    "exchange_rate": "1 Gold Dust Unit ≈ 10 USD; 1 Gold Nugget ≈ 100 USD. Gold Dust Units and Gold Nuggets are used informally across California mining camps during the Gold Rush."
+  }
+]
