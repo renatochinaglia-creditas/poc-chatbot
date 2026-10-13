@@ -7,6 +7,8 @@ services:
     environment:
       - STREAMLIT_PORT=${STREAMLIT_PORT:-8501}
       - STREAMLIT_URL=${STREAMLIT_URL:-0.0.0.0}
+      - FASTAPI_PORT=${FASTAPI_PORT:-8000}
+      - FASTAPI_BASE_URL=${FASTAPI_BASE_URL:-http://api}
     command:
       [
         "sh",
@@ -14,6 +16,8 @@ services:
         "streamlit run app.py --server.port=${STREAMLIT_PORT:-8501}
           --server.address=${STREAMLIT_URL:-0.0.0.0}",
       ]
+    depends_on:
+      - backend_api
     volumes:
       - ./chatbot/app:/app
     networks:
@@ -23,6 +27,9 @@ services:
     image: ollama/ollama:0.21.2
     ports:
       - "127.0.0.1:11435:11434"
+    environment:
+      - LLM_MODEL=${LLM_MODEL}
+      - MODEL=${LLM_MODEL}
     volumes:
       - ollama_models:/root/.ollama
       - ./corp-ca.pem:/etc/ssl/certs/ca-certificates.crt:ro

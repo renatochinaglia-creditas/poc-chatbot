@@ -28,7 +28,7 @@ if prompt := st.chat_input("What can I help you with today?"):
 
     # Display chatbot responses in chat message container
     with st.chat_message("assistant"):
-        with st.spinner("Considering your request..."):
+        with st.spinner("Considering your request (may take a minute)..."):
             response = generate_response(prompt)
 
         if response["success"]:
