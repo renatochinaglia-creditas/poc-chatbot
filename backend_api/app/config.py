@@ -6,8 +6,8 @@ class Config(BaseSettings):
     LLM_MODEL: str = os.getenv("LLM_MODEL", "llama3.2:1b")
     LLM_BASE_URL: str = os.getenv("LLM_BASE_URL")
     LLM_PORT: str = os.getenv("LLM_PORT")
+    SYSTEM_PROMPT_PATH: str = "./prompts/system-prompt-concise.txt"
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
-    SYSTEM_PROMPT_PATH: str = os.getenv("SYSTEM_PROMPT_PATH", "prompts/system-prompt.txt")
 
     def __getattr__(self, item):
         """

@@ -1,0 +1,7 @@
+chromadb==1.5.8
+nltk==3.9.1
+openai==2.31.0
+ollama==0.6.1
+ddtrace==4.10.2
+pytest==8.0.2
+posthog>=2.4.0,<6.0.0
