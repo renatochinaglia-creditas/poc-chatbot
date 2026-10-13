@@ -6,7 +6,7 @@ PoC de um chatbot (**QuantumHound**, uma agência fictícia de viagem no tempo) 
 |-------|--------|------------|
 | 1 | `step-1-baseline` | Chatbot Streamlit com respostas fixas |
 | 2 | `step-2-ollama` | Backend FastAPI que chama o Ollama (do Mac), com observabilidade no Datadog |
-| 3 (esta) | `step-3` | Ollama em container Docker, backend via cliente OpenAI e instrumentação explícita do LLM Observability |
+| 3 (esta) | `step-3` | Ollama em container Docker e backend via cliente OpenAI, com um bug proposital para investigar no Datadog |
 
 Para ver o código de uma etapa: `git checkout <branch>`. Para ver o que mudou, abra o PR da etapa. Cada branch tem o README com as instruções da própria etapa.
 
@@ -21,7 +21,7 @@ Navegador ──► chatbot (Streamlit :8501) ──GET /ask──► api (FastA
 - **chatbot:** interface de chat em Streamlit, em [chatbot/app/](chatbot/app/).
 - **api:** backend FastAPI, em [backend_api/app/](backend_api/app/). Expõe `GET /ask?prompt=...` e `GET /health`.
 - **llm:** Ollama em container (`ollama/ollama`), com o modelo guardado no volume `ollama_models`.
-- **Datadog:** o backend roda sob `ddtrace-run` e envia spans de LLM direto à API do Datadog, sem Datadog Agent.
+- **Datadog:** o backend roda sob `ddtrace-run` e envia direto à API do Datadog, sem Datadog Agent. Nesta etapa a chamada ao modelo **não** tem instrumentação explícita (veja "Problemas encontrados").
 
 ## O que mudou em relação à etapa 2
 
@@ -35,7 +35,8 @@ Navegador ──► chatbot (Streamlit :8501) ──GET /ask──► api (FastA
 | Erro mostrado no chat | `Backend error: ...` | `API Error ...: See Datadog trace for details`, convidando a investigar no Datadog |
 | Dockerfile do backend | Só instala dependências | Instala `procps` e `coreutils`, e define o `CMD` do `uvicorn` |
 | Porta do Ollama no Mac | Usa a do Ollama local | `127.0.0.1:11435`, só na loopback, para não colidir com o Ollama local |
-| Instrumentação do Datadog | `@llm` em `app.py` | `@llm` em `ask_the_llm`, em `utils/llm.py` |
+| Instrumentação do Datadog | `@llm` e `LLMObs.annotate` em `app.py` | Nenhuma explícita: só a auto-instrumentação do `ddtrace` |
+| Nome do modelo | Vem do `LLM_MODEL` | Fixo no código, em `utils/llm.py` (bug proposital) |
 
 ## Passo a passo do que foi feito na etapa 3
 
@@ -48,7 +49,7 @@ Navegador ──► chatbot (Streamlit :8501) ──GET /ask──► api (FastA
 2. **Porta do Ollama só na loopback.** O Ollama não tem autenticação. Publicá-lo em `0.0.0.0` o deixaria acessível a qualquer máquina da rede. A porta ficou `127.0.0.1:11435:11434`. O `11435` evita o conflito com o Ollama local, que já usa `11434`. O backend não usa essa porta: ele fala com `locallama:11434` pela rede do Docker.
 3. **Backend com cliente OpenAI.** O [utils/llm.py](backend_api/app/utils/llm.py) cria um cliente `openai` apontando para `{LLM_BASE_URL}:{LLM_PORT}/v1`, o endpoint compatível do Ollama. [app.py](backend_api/app/app.py) expõe `GET /ask` e `GET /health`.
 4. **Chatbot chamando `/ask`.** [chat_requests.py](chatbot/app/chat_requests.py) faz `GET` em `/ask` e, se o status não for 200, mostra `API Error (Status N): See Datadog trace for details`.
-5. **Instrumentação explícita do LLM Observability.** `ask_the_llm` ganhou o decorator `@llm(model_provider="ollama")` e um `LLMObs.annotate` com entrada e saída (veja "Problemas encontrados").
+5. **Bug proposital.** Em [utils/llm.py](backend_api/app/utils/llm.py) o modelo está escrito direto no código, com typo (`lama3.2:1b`), em vez de vir de `config.LLM_MODEL`. O Ollama responde 404, o backend devolve 500 e o chat mostra `API Error (Status 500): See Datadog trace for details`. O exercício é encontrar a causa pelo Datadog.
 
 ## Como rodar (etapa 3)
 
@@ -103,7 +104,7 @@ Navegador ──► chatbot (Streamlit :8501) ──GET /ask──► api (FastA
 | Mudar `LLM_MODEL` no `config.py` ou no `.env` não surte efeito | O nome do modelo está fixo em `utils/llm.py`, e não vem de `config.LLM_MODEL` | Usar `config.LLM_MODEL` na chamada |
 | `ports are not available: ... 127.0.0.1:11434: address already in use` | O Ollama local do Mac já usa a 11434 | Publicar o container em outra porta (`11435`) |
 | `SSLCertVerificationError` nos logs, ou `ollama pull` falhando | Proxy da empresa intercepta o HTTPS | Montar `corp-ca.pem` e usar `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE` |
-| Nada aparece no LLM Observability, mesmo com chave e rede válidas | A chamada ao modelo não gerava span de LLM. O cliente `openai` aponta para o Ollama (`base_url` que não é da OpenAI) | Instrumentar `ask_the_llm` com `@llm` e `LLMObs.annotate` |
+| A chamada ao modelo não aparece como span de LLM no LLM Observability, mesmo com chave e rede válidas | Nos testes, o `ddtrace` não gerou o span de LLM para o cliente `openai` apontando para o Ollama (`base_url` que não é da OpenAI). Um span manual foi enviado normalmente | Instrumentar `ask_the_llm` com `@llm(model_provider="ollama")` e `LLMObs.annotate`, como na etapa 2 |
 | `failed to send, dropping N traces to http://localhost:8126` nos logs | O APM (aba Traces) precisa de um Datadog Agent, que não existe aqui | Ignorar: o LLM Observability em modo agentless não depende dele |
 | Não vejo os dados no Datadog | Conta ou site errados, ou período curto | Usar a conta da `DD_API_KEY`, o `DD_SITE` dela e ampliar o período |
 
