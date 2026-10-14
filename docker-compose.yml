@@ -46,29 +46,39 @@ services:
       - "${FASTAPI_PORT}:${FASTAPI_PORT:-8000}"
     volumes:
       - ./backend_api/app:/app
+      - ./chroma_data:/chroma/data
       - ./corp-ca.pem:/etc/ssl/corp-ca.pem:ro
     environment:
       - FASTAPI_PORT=${FASTAPI_PORT:-8000}
       - LLM_MODEL=${LLM_MODEL}
-      - LLM_BASE_URL=${LLM_BASE_URL:-http://host.docker.internal}
+      - LLM_BASE_URL=${LLM_BASE_URL:-http://locallama}
       - LLM_PORT=${LLM_PORT:-11434}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OLLAMA_DEFAULT_PORT=${OLLAMA_DEFAULT_PORT:-11434}
-      - DD_ENV=${DD_ENV:-staging}
-      - DD_SERVICE=${DD_SERVICE:-quantumhound-api}
-      - DD_VERSION=${DD_VERSION:-1.0.0}
-      - DD_SITE=${DD_SITE:-datadoghq.com}
-      - DD_API_KEY=${DD_API_KEY}
       - SSL_CERT_FILE=/etc/ssl/corp-ca.pem
       - REQUESTS_CA_BUNDLE=/etc/ssl/corp-ca.pem
+      - OLLAMA_DEFAULT_PORT=${OLLAMA_DEFAULT_PORT:-11434}
+      - EMBED_BASE_URL=${EMBED_BASE_URL:-http://text-embedder}
+      - EMBED_PORT=${OLLAMA_DEFAULT_PORT:-11434}
+      - EMBED_MODEL=${EMBED_MODEL:-nomic-embed-text:v1.5}
+      - CHROMADB_PORT=${CHROMADB_PORT:-8000}
+      - CHROMADB_HOST=${CHROMADB_HOST:-vector-store}
+      # Datadog env vars always recommended
+      - CHROMA_DATA_DIR=/chroma/data
+      - DD_ENV=${DD_ENV:-qh-local}
+      - DD_SERVICE=${DD_SERVICE:-quantumhound-api}
+      - DD_VERSION=${DD_VERSION:-1.2.0}
+      # Required for Agent Observability
+      - DD_SITE=${DD_SITE:-datadoghq.com}
+      - DD_API_KEY=${DD_API_KEY}
       - DD_LLMOBS_ENABLED=1
       - DD_LLMOBS_ML_APP=quantumhound-chatbot
+      # Only required if the Datadog Agent is not running
       - DD_LLMOBS_AGENTLESS_ENABLED=1
     command:
       [
         "sh",
         "-c",
-        "ddtrace-run uvicorn app:app --host ${FASTAPI_HOST} --port ${FASTAPI_PORT:-8000}
+        "uvicorn app:app --host ${FASTAPI_HOST} --port ${FASTAPI_PORT:-8000}
           --reload",
       ]
     restart: on-failure
@@ -90,6 +100,7 @@ services:
       - ./corp-ca.pem:/etc/ssl/certs/ca-certificates.crt:ro
     networks:
       - llm_app
+
   vector_store:
     container_name: vector-store
     image: chromadb/chroma:1.5.8
@@ -101,6 +112,7 @@ services:
       - ./chroma_data:/chroma/data # Persistent storage for embeddings
     networks:
       - llm_app
+
   kb_service:
     container_name: kb-service
     build: ./kb-service
@@ -112,19 +124,22 @@ services:
       - CHROMADB_PORT=${CHROMADB_PORT:-8000}
       - CHROMADB_HOST=${CHROMADB_HOST:-vector-store}
       - CHROMA_DATA_DIR=/chroma/data
-      - KB_DATA_DIR=./kb-data
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CHUNKING_STRATEGY=${CHUNKING_STRATEGY:-fixed}
       - ANONYMIZED_TELEMETRY=false
       - SSL_CERT_FILE=/etc/ssl/corp-ca.pem
       - REQUESTS_CA_BUNDLE=/etc/ssl/corp-ca.pem
-      # Add Datadog env vars for Agent Observability here
-      - DD_SITE=${DD_SITE}
-      - DD_API_KEY=${DD_API_KEY}
-      - DD_LLMOBS_ML_APP=quantumhound-chatbot
-      - DD_LLMOBS_AGENTLESS_ENABLED=1
+      # Datadog env vars always recommended
       - DD_ENV=${DD_ENV:-qh-local}
       - DD_SERVICE=${DD_SERVICE:-quantumhound-kb}
-      - DD_VERSION=${DD_VERSION:-1.0.0}
+      - DD_VERSION=${DD_VERSION:-2.0.0}
+      # Datadog env vars for Agent Observability
+      - DD_SITE=${DD_SITE:-datadoghq.com}
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_LLMOBS_ENABLED=1
+      - DD_LLMOBS_ML_APP=quantumhound-chatbot
+      # Only required if the Datadog Agent is not running
+      - DD_LLMOBS_AGENTLESS_ENABLED=1
     volumes:
       - ./kb-service:/app
       - ./chroma_data:/chroma/data

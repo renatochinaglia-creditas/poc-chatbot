@@ -77,10 +77,7 @@ def process_json_file(file_path: str) -> List[Tuple[str, str]]:
             json_data = json.load(file)
 
             if not isinstance(json_data, list):
-                print(
-                    f"Skipping {file_path}: Expected a list, "
-                    + f"got {type(json_data)}"
-                )
+                print(f"Skipping {file_path}: Expected a list, got {type(json_data)}")
                 return data
 
             # Get topic from filename
@@ -212,5 +209,5 @@ def clear_collections() -> None:
     """
     Deletes all existing collections from the ChromaDB instance.
     """
-    for collection in chromadb_client.list_collections():
-        chromadb_client.delete_collection(collection.name)
+    for collection_name in chromadb_client.list_collections():
+        chromadb_client.delete_collection(collection_name)

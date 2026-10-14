@@ -13,6 +13,23 @@ mock_chromadb.HttpClient.return_value.get_or_create_collection.return_value = (
 # Mock the chromadb module
 sys.modules["chromadb"] = mock_chromadb
 
+# Mock LLMObs instrumentation. These unit tests validate ingestion behavior,
+# not Datadog span delivery.
+def passthrough_decorator(func=None, *args, **kwargs):
+    if func is None:
+        return lambda wrapped: wrapped
+    return func
+
+
+mock_llmobs = MagicMock()
+mock_llmobs.LLMObs.enable = MagicMock()
+mock_llmobs_decorators = MagicMock()
+mock_llmobs_decorators.workflow = passthrough_decorator
+mock_llmobs_decorators.tool = passthrough_decorator
+mock_llmobs_decorators.embedding = passthrough_decorator
+sys.modules["ddtrace.llmobs"] = mock_llmobs
+sys.modules["ddtrace.llmobs.decorators"] = mock_llmobs_decorators
+
 # Now we can safely import our modules
 import ingest_documents
 from ingest_documents import create_document_embeddings, store_document
