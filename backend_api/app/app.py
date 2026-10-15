@@ -1,11 +1,19 @@
+import os
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
-from utils.llm import ask_the_llm
-# add ddtrace import here
+from utils.llm import ask_the_llm_with_rag
 
-# add ddtrace method to enable Agent Observability here
+# enable Agent Observability
+from ddtrace.llmobs import LLMObs
+
+LLMObs.enable(
+    ml_app=os.getenv("DD_LLMOBS_ML_APP"),
+    api_key=os.getenv("DD_API_KEY"),
+    site=os.getenv("DD_SITE"),
+)
 
 app = FastAPI()
+
 
 @app.get("/ask")
 def ask(prompt: str | None):
@@ -16,13 +24,13 @@ def ask(prompt: str | None):
         return Response(
             content="Did you have a question?", media_type="application/json"
         )
-    response = ask_the_llm(prompt)
+    response = ask_the_llm_with_rag(prompt)  # New LLM call with RAG
     return Response(content=response, media_type="application/json")
 
 
 @app.get("/health")
 def health():
     """
-    Simple health check endpoint that returns a 200 status code.
+    Health check endpoint.
     """
     return JSONResponse(content={"status": "ok"}, status_code=200)
