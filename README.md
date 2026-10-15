@@ -7,35 +7,52 @@ PoC de um chatbot (**QuantumHound**, uma agência fictícia de viagem no tempo) 
 | 1 | `step-1-baseline` | Chatbot Streamlit com respostas fixas |
 | 2 | `step-2-ollama` | Backend FastAPI que chama o Ollama (do Mac), com observabilidade no Datadog |
 | 3 | `step-3` | Ollama em container Docker e backend via cliente OpenAI, com um bug proposital para investigar |
-| 4 (esta) | `step-4-rag` | Pontapé inicial do RAG: system prompt configurável, bug do modelo corrigido e a **ingestão** da base de conhecimento (chunks, embeddings e ChromaDB). A busca e a injeção no prompt ficam para a próxima etapa |
+| 4 | `step-4-rag` | Pontapé inicial do RAG: system prompt configurável, bug do modelo corrigido e a **ingestão** da base de conhecimento (chunks, embeddings e ChromaDB). A busca e a injeção no prompt ficam para a próxima etapa |
+| 5 (esta) | `step-5-workflow-rag` | Fim do RAG: o backend categoriza a pergunta, busca os chunks no ChromaDB e injeta o contexto no prompt, com spans de LLM Observability em cada passo |
 
 Para ver o código de uma etapa: `git checkout <branch>`. Para ver o que mudou, abra o PR da etapa. Cada branch tem o README com as instruções da própria etapa.
 
-## Estado da etapa 4
+## Estado da etapa 5
 
-A etapa 4 é o pontapé inicial do RAG. Ela entrega a primeira metade: a **ingestão**. O [kb-service/](kb-service/) quebra os documentos de `kb-data/` em chunks, gera embeddings com o `nomic-embed-text` e os grava no ChromaDB. O [README do kb-service](kb-service/README.md) explica os conceitos (chunk, embedding, vetor) e o passo a passo.
+A etapa 5 completa o RAG. A etapa 4 entregou a **ingestão** (veja o [README do kb-service](kb-service/README.md) para os conceitos e o passo a passo). Agora o endpoint `GET /ask` chama `ask_the_llm_with_rag`, em [utils/llm.py](backend_api/app/utils/llm.py), que consulta a base antes de responder.
 
-A segunda metade, a **consulta**, ainda não existe. Em [utils/llm.py](backend_api/app/utils/llm.py), `ask_the_llm` continua sendo uma chamada direta ao LLM ("Not RAG-enabled, just a straightforward LLM call"): o backend não consulta o Chroma. Também há um system prompt carregado de arquivo e o modelo vindo da configuração.
+### Como o workflow funciona
+
+Cada pergunta passa por cinco passos, todos no mesmo trace do Datadog:
+
+| # | Passo | Função | Span |
+|---|-------|--------|------|
+| 1 | Pergunta | `ask_the_llm_with_rag` | workflow (raiz) |
+| 2 | Escolhe a coleção: o LLM classifica a pergunta em uma de 7 categorias (`faq`, `legal`, `sales`, `technology`, `travel_experience`, `travel_packages`, `travel_policies`) | `categorize_query` | llm |
+| 3 | Transforma a pergunta em vetor, com o prefixo `search_query:` | `create_embeddings` | embedding |
+| 4 | Busca no Chroma os 3 chunks mais próximos, na coleção escolhida | `find_similar_documents` em [vector_store.py](backend_api/app/utils/vector_store.py) | retrieval |
+| 5 | Monta o prompt com o contexto e chama o LLM | `ask_the_llm` | llm |
+
+O Chroma é lido direto de `./chroma_data` (`PersistentClient`), a mesma pasta em que o `kb_service` grava. O `vector_store` não é usado.
 
 ### O que esta etapa cobre e o que não cobre
 
 | Cobre | Não cobre |
 |---|---|
-| System prompt configurável, lido de arquivo (`SYSTEM_PROMPT_PATH`), com duas variantes para comparar | Busca no Chroma: nenhuma pergunta do chat gera consulta à base |
-| Ingestão dos documentos de `kb-data/` (`.md`, `.txt` e `.json`) em chunks, com quebra fixa de 500 caracteres ou por sentenças | Injeção dos trechos recuperados no prompt do LLM |
-| Embeddings com o `nomic-embed-text`, rodando no Ollama do container `text-embedder` | Integração do `backend_api` com o Chroma ou com o `kb_service` |
-| Armazenamento dos vetores no ChromaDB, uma coleção por arquivo, persistido em `./chroma_data` | Ingestão incremental: cada execução apaga todas as coleções e recria tudo |
-| Spans de LLM Observability na ingestão (workflow, embedding e tool), enviados ao Datadog em modo agentless | Input e output nos spans de embedding e tool (falta `LLMObs.annotate`) |
-| Testes unitários da ingestão em [kb-service/test_ingest_documents.py](kb-service/test_ingest_documents.py) | Avaliação da qualidade da recuperação, ou ajuste do tamanho dos chunks |
-| Suporte a proxy corporativo (`corp-ca.pem`) nos containers que acessam a internet | Ingestão automática: ela é manual, com `docker exec` (veja o README do kb-service) |
+| Consulta completa: categoriza, gera o embedding, busca no Chroma e responde com o contexto | Limiar de distância: perguntas sem conteúdo (como "ola") recuperam 3 chunks quaisquer |
+| Spans de LLM Observability do workflow, llm, embedding e retrieval | Tratar saudações antes da busca |
+| `backend_api` com `chromadb`, `EMBED_*` e acesso a `./chroma_data` | Corrigir o chunking `fixed`, que corta o JSON no meio (use `CHUNKING_STRATEGY` diferente de `fixed` e reingira) |
+| `corp-ca.pem` também no `backend_api`, para o envio ao Datadog | Evitar o span duplicado da chamada ao LLM (veja "Problemas encontrados") |
+| | Avaliar a qualidade das respostas ou trocar o modelo de 1B |
 
-Resumindo: ao fim desta etapa, a base de conhecimento existe e está populada, mas o chatbot ainda não a usa.
+Limitações que valem saber:
+
+- O prompt do RAG está **fixo em `ask_the_llm_with_rag`**. O `SYSTEM_PROMPT_PATH` e os arquivos em `prompts/` só valem para chamadas diretas a `ask_the_llm` sem `system_prompt`, que o `/ask` não faz mais.
+- O contexto entra no prompt como o `repr` da lista de chunks, com aspas e escapes.
+- O categorizador (`llama3.2:1b`) pode devolver uma categoria inválida. Nesse caso `categorize_query` lança `ValueError` e o `/ask` responde 500.
 
 ## Arquitetura
 
 ```
 Navegador ──► chatbot (Streamlit :8501) ──GET /ask──► api (FastAPI :8000) ──► llm (Ollama, container locallama :11434)
                                                             │
+                                                            ├──► text_embedder (Ollama, embedding da pergunta)
+                                                            ├──► ChromaDB (./chroma_data, leitura dos chunks)
                                                             └──► Datadog (LLM Observability, modo agentless)
 
 Ingestão (manual, fora do caminho do chat):
@@ -48,7 +65,7 @@ kb-data/ ──► kb_service ──► text_embedder (Ollama, nomic-embed-text)
 - **text_embedder:** segundo Ollama, só para embeddings, com o modelo `nomic-embed-text:v1.5`. Compartilha o volume `ollama_models` com o `llm`.
 - **vector_store:** servidor ChromaDB, com dados em `./chroma_data`. O `kb_service` grava nessa pasta com `PersistentClient`, sem passar por esse servidor, e o `backend_api` ainda não o consulta.
 - **kb_service:** roda a ingestão em [kb-service/](kb-service/). O container fica parado em `tail -f /dev/null`, e o script é executado com `docker exec`.
-- **Datadog:** o backend roda sob `ddtrace-run` e envia direto à API do Datadog, sem Datadog Agent. [app.py](backend_api/app/app.py) tem dois marcadores `# add ddtrace ... here`, ainda sem código: não há instrumentação explícita do LLM Observability nesta etapa.
+- **Datadog:** o backend roda sob `ddtrace-run` e envia direto à API do Datadog, sem Datadog Agent. [app.py](backend_api/app/app.py) chama `LLMObs.enable`, e as funções do workflow usam os decorators `@workflow`, `@llm`, `@embedding` e `@retrieval`.
 
 ## O que mudou em relação à etapa 3
 
@@ -132,10 +149,12 @@ kb-data/ ──► kb_service ──► text_embedder (Ollama, nomic-embed-text)
 | `external volume "ollama_models" not found` ao subir | O compose esperava um volume criado à mão (`external: true`) | Volume gerenciado pelo compose, como nesta etapa. Se vier de outra branch, remova `external` e `name` do volume |
 | `FileNotFoundError: [Errno 2] No such file or directory: ''` em `system_prompt.py` | `config.SYSTEM_PROMPT_PATH` vazio. O `Config` devolve `""` para campos que não existem | Definir o campo em `config.py`, como nesta etapa |
 | `model '...' not found` (404 do Ollama) e 500 no chat | O modelo do `LLM_MODEL` não existe no Ollama **do container**. O Ollama do Mac tem outros modelos | `docker exec locallama ollama list` e usar um nome exato, ou `ollama pull` |
-| `Connection refused` ao chamar `api:8000` | O container `api` caiu na subida (por exemplo, dependência faltando) | `docker logs api` |
+| `Connection refused` ao chamar `api:8000` | O container `api` caiu na subida. Nesta etapa já aconteceu por `EMBED_BASE_URL` e `EMBED_PORT` não repassadas pelo compose, e por falta do `chromadb` na imagem | `docker logs api`, e `docker compose up -d --build backend_api` |
 | `SSLCertVerificationError`, ou `ollama pull` falhando | Proxy da empresa intercepta o HTTPS | Montar `corp-ca.pem` e usar `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE` |
 | `failed to send, dropping N traces to http://localhost:8126` nos logs | O APM (aba Traces) precisa de um Datadog Agent, que não existe aqui | Ignorar: o LLM Observability em modo agentless não depende dele |
-| A chamada ao modelo não aparece como span de LLM no LLM Observability | Nos testes, o `ddtrace` não gerou o span para o cliente `openai` apontando para o Ollama (`base_url` que não é da OpenAI). Um span manual foi enviado normalmente | Instrumentar `ask_the_llm` com `@llm(model_provider="ollama")` e `LLMObs.annotate`. É o que os marcadores `# add ddtrace ... here` em `app.py` deixam em aberto |
+| Dois spans de LLM iguais no mesmo trace (`ask_the_llm` e `OpenAI.createChatCompletion`) | O `@llm` manual e a integração automática do `ddtrace` com o cliente `openai` registram a mesma chamada, um dentro do outro | Remover o `@llm` e o `LLMObs.annotate` de `ask_the_llm` e `categorize_query`, ou ligar `LLMObs.enable(..., integrations_enabled=False)`. Ainda não corrigido |
+| Nada no Datadog, ou `CERTIFICATE_VERIFY_FAILED` | O `backend_api` ou o `kb_service` sem `SSL_CERT_FILE` e `REQUESTS_CA_BUNDLE` atrás do proxy da empresa | Manter as duas variáveis e o mount do `corp-ca.pem`, e recriar o container |
+| Só a versão antiga aparece no gráfico de versões do Datadog | Gráfico de média de `total_tokens` só inclui spans que têm tokens, e a raiz agora é um workflow, sem tokens | Trocar a medida para Count, ou filtrar `@span.kind:llm` |
 
 ## Segurança
 
@@ -146,4 +165,4 @@ kb-data/ ──► kb_service ──► text_embedder (Ollama, nomic-embed-text)
 
 ## Próximas etapas
 
-Completar o RAG com a consulta: transformar a pergunta em embedding (com o prefixo `search_query:`), buscar no Chroma os chunks mais próximos e injetá-los no prompt do LLM.
+Melhorar a qualidade da recuperação: limiar de distância e tratamento de perguntas sem conteúdo, chunking que preserve a estrutura, contexto formatado no prompt, remoção do span duplicado e um modelo de geração maior.
